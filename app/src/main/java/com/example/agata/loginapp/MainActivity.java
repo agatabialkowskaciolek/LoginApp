@@ -1,10 +1,13 @@
 package com.example.agata.loginapp;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -35,17 +39,56 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        Fragment fragment = new MainFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
     }
 
     private void addDrawerItems() {
-        String[] osArray = {"Android", "iOS", "Windows", "OS X", "Linux"};
+        String[] osArray = {"Strona główna", "Android", "iOS", "Windows", "OS X", "Linux"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+
+                Fragment fragment = null;
+                FragmentManager fragmentManager;
+
+
+                switch (position) {
+
+                    case 0:
+                        fragment = new MainFragment();
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        break;
+
+                    case 1:
+                        fragment = new OneFragment();
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+
+
+                        break;
+                    //Toast.makeText(MainActivity.this, "111111", Toast.LENGTH_SHORT).show();
+                    case 2:
+                        Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                }
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+                //getActionBar().setTitle(mNavigationDrawerItemTitles[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
+                if (fragment != null) {
+
+
+                } else {
+                    Log.e("MainActivity", "Error in creating fragment");
+                }
+
+
             }
         });
     }
