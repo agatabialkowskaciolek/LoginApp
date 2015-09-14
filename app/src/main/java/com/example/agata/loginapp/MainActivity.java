@@ -2,36 +2,148 @@ package com.example.agata.loginapp;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
-    private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private CharSequence mTitle;
+    private DrawerLayout mDrawerLayout;
+    private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
+    private String mActivityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        addDrawerItems();
+        setupDrawer();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void addDrawerItems() {
+        String[] osArray = {"Android", "iOS", "Windows", "OS X", "Linux"};
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // Activate the navigation drawer toggle
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+}
+
+    /*private String[] mPlanetTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private CharSequence mTitle;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private int selectedPosition;
+    public static final String SETTING_INFOS = "SETTING_Infos";
+    public static final String NAME = "NAME";
+    String userLogin;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
         //  StringTokenizer tokens = new StringTokenizer(loginEditText.getText().toString(), "@");
         //  String first = tokens.nextToken();// this will contain "Fruit"
         //   String second = tokens.nextToken();// this will contain " they taste good"
+       *//* SharedPreferences s = getSharedPreferences(SETTING_INFOS, 0);
+        String userLogin = s.getString(NAME, "");
+        EditText userLoginEditText = (EditText) findViewById(R.id.loginEditText);
+userLogin=userLoginEditText.getText().toString();
+       // TextView helloUser = (TextView) findViewById(R.id.helloUserTextView);
+        SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
 
-        TextView helloUser = (TextView) findViewById(R.id.helloUserTextView);
-
+        settings.edit()
+                .putString(NAME,userLogin )
+                .apply();
+*//*
         //  helloUser.setText(""+first);
         //Bundle bundle = getIntent().getExtras();
         //String message = bundle.getString("key");
@@ -52,25 +164,36 @@ public class MainActivity extends FragmentActivity {
 
 
         mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
+                this,                  *//* host Activity *//*
+                mDrawerLayout,         *//* DrawerLayout object *//*
+                R.string.drawer_open,  *//* "open drawer" description *//*
+                R.string.drawer_close  *//* "close drawer" description *//*
         );
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+
     }
 
-    /* @Override
+
+
+        *//* Passing selected item information to fragment *//*
+       *//* Bundle data = new Bundle();
+        data.putString("title", items[selectedPosition]);
+        data.putString("url", getUrl());
+        rFragment.setArguments(data);
+*//*
+
+
+    *//* @Override
      public boolean onCreateOptionsMenu(Menu menu) {
          // Inflate the menu; this adds items to the action bar if it is present.
          getMenuInflater().inflate(R.menu.main, menu);
          return true;
      }
- */
+ *//*
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -96,9 +219,10 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+
+    *//**
      * Swaps fragments in the main content view
-     */
+ *//*
     private void selectItem(int position) {
         Toast.makeText(this, R.string.app_name, Toast.LENGTH_SHORT).show();
 
@@ -108,18 +232,23 @@ public class MainActivity extends FragmentActivity {
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-  /*  @Override
+  *//*  @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
-    }*/
+    }*//*
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            //selectItem(position);
         }
-
     }
+*/
 
-}
+
+
+
+
+
+
