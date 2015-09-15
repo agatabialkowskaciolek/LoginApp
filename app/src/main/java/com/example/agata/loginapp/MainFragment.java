@@ -75,6 +75,8 @@ public class MainFragment extends Fragment {
         helloUser.setText("Hello " + first);
         helloUser.setVisibility(View.VISIBLE);
         return view;
+
+        //commit
     }
 
 

@@ -78,6 +78,7 @@ public class TwoFragment extends Fragment {
 
         ContactAdapter ca = new ContactAdapter(createList(30));
         recList.setAdapter(ca);
+        //commit
 
     return view;
     }
