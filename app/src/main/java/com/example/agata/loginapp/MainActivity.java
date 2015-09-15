@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,12 +69,22 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new OneFragment();
                         fragmentManager = getFragmentManager();
                         fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
-
-
                         break;
                     //Toast.makeText(MainActivity.this, "111111", Toast.LENGTH_SHORT).show();
                     case 2:
-                        Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                        fragment = new TwoFragment();
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        break;
+
+                 /*   case 3:
+                        fragment = new ThreeFragment();
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        break;*/
+
+
+                        //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 }
                 mDrawerList.setItemChecked(position, true);
                 mDrawerList.setSelection(position);
