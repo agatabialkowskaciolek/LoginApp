@@ -76,7 +76,7 @@ public class MainFragment extends Fragment {
         helloUser.setVisibility(View.VISIBLE);
         return view;
 
-        //commit
+
     }
 
 

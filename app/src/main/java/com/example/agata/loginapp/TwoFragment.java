@@ -3,6 +3,7 @@ package com.example.agata.loginapp;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ public class TwoFragment extends Fragment {
 
 
     private RecyclerView mRecyclerView;
+    private CountryAdapter mAdapter;
+
 
     private RecyclerView.LayoutManager mLayoutManager;
     protected String[] mDataset;
@@ -72,14 +75,22 @@ public class TwoFragment extends Fragment {
 
         RecyclerView recList = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         recList.setHasFixedSize(true);
+
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        ContactAdapter ca = new ContactAdapter(createList(30));
+        ContactAdapter ca = new ContactAdapter(createList(30), R.layout.card_layout, getActivity());
         recList.setAdapter(ca);
-        //commit
 
+
+        /*mRecyclerView = (RecyclerView)view.findViewById(R.id.my_recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter = new CountryAdapter(CountryManager.getInstance().getCountries(), R.layout.card_layout, getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+*/
     return view;
     }
 
@@ -98,6 +109,6 @@ public class TwoFragment extends Fragment {
 
         return result;
     }
-//kkkk
+
 }
 

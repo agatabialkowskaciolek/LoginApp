@@ -1,5 +1,6 @@
 package com.example.agata.loginapp;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,17 @@ import java.util.List;
 /**
  * Created by aciolekwaw on 2015-09-15.
  */
-public class ContactAdapter extends RecyclerView.Adapter {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private List<ContactInfo> contactList;
+    private int rowLayout;
+    private Context mContext;
 
-    public ContactAdapter(List<ContactInfo> contactList) {
+
+    public ContactAdapter(List<ContactInfo> contactList, int rowLayout, Context context) {
         this.contactList = contactList;
+        this.rowLayout = rowLayout;
+        this.mContext = context;
     }
 
 
@@ -25,14 +31,14 @@ public class ContactAdapter extends RecyclerView.Adapter {
         return contactList.size();
     }
 
-
-    public void onBindViewHolder(ContactViewHolder contactViewHolder, int i) {
+/*    @Override
+       public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         ContactInfo ci = contactList.get(i);
-        contactViewHolder.vName.setText(ci.name);
-        contactViewHolder.vSurname.setText(ci.surname);
+        viewHolder.vName.setText(ci.name);
+        viewHolder.vSurname.setText(ci.surname);
         contactViewHolder.vEmail.setText(ci.email);
         contactViewHolder.vTitle.setText(ci.name + " " + ci.surname);
-    }
+    }*/
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -44,9 +50,20 @@ public class ContactAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    public void onBindViewHolder(ContactViewHolder holder, int i) {
+        ContactInfo ci = contactList.get(i);
+        holder.vName.setText(ci.name);
+        holder.vSurname.setText(ci.surname);
+        holder.vEmail.setText(ci.email);
+        holder.vTitle.setText(ci.name + " " + ci.surname);
+    }
+
+
+
+/*    @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-    }
+    }*/
 
     public static class ContactViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,5 +81,3 @@ public class ContactAdapter extends RecyclerView.Adapter {
         }
     }
 }
-//commit
-//---
