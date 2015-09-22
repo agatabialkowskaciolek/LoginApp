@@ -154,6 +154,7 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
         return result;
     }
+    //bbbbb
 
 
     @Override
