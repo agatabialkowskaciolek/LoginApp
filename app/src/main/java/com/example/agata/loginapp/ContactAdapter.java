@@ -17,12 +17,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     private List<ContactInfo> contactList;
     private int rowLayout;
     private Context mContext;
+    private OnCardClick onCardClick;
 
 
-    public ContactAdapter(List<ContactInfo> contactList, int rowLayout, Context context) {
+    public ContactAdapter(List<ContactInfo> contactList, int rowLayout, Context context, OnCardClick onCardClick) {
         this.contactList = contactList;
         this.rowLayout = rowLayout;
         this.mContext = context;
+        this.onCardClick = onCardClick;
     }
 
 
@@ -56,6 +58,8 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         holder.vSurname.setText(ci.surname);
         holder.vEmail.setText(ci.email);
         holder.vTitle.setText(ci.name + " " + ci.surname);
+
+        holder.getAdapterPosition();
     }
 
 
@@ -69,7 +73,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     }*/
 
-    public static class ContactViewHolder extends RecyclerView.ViewHolder {
+    public interface OnCardClick {
+
+        void onTap(int position);
+
+
+    }
+
+    public class ContactViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView vName;
         protected TextView vSurname;
@@ -78,10 +89,23 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
         public ContactViewHolder(View v) {
             super(v);
-            vName =  (TextView) v.findViewById(R.id.txtName);
-            vSurname = (TextView)  v.findViewById(R.id.txtSurname);
-            vEmail = (TextView)  v.findViewById(R.id.txtEmail);
+            vName = (TextView) v.findViewById(R.id.txtName);
+            vSurname = (TextView) v.findViewById(R.id.txtSurname);
+            vEmail = (TextView) v.findViewById(R.id.txtEmail);
             vTitle = (TextView) v.findViewById(R.id.title);
+
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // view.getContext().startActivity(new Intent(view.getContext(), MainActivity.class));
+                    int position = getAdapterPosition();
+                    onCardClick.onTap(position);
+
+
+                }
+            });
         }
     }
+
 }
