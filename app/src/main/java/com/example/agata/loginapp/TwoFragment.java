@@ -29,7 +29,6 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
     private static final String ARG_PARAM2 = "param2";
     protected String[] mDataset;
     private RecyclerView mRecyclerView;
-    private CountryAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ContactAdapter ca;
     private List<ContactInfo> result = new ArrayList<ContactInfo>();
@@ -160,7 +159,7 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
     @Override
     public void onTap(int position) {
 
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), CardActivity.class);
         intent.putExtra("key", position);
         startActivity(intent);
         Toast.makeText(getActivity(), "mg" + position, Toast.LENGTH_SHORT).show();
