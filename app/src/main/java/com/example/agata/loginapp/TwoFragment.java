@@ -160,7 +160,8 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
     public void onTap(int position) {
 
         Intent intent = new Intent(getActivity(), CardActivity.class);
-        intent.putExtra("key", position);
+        Bundle args = new Bundle();
+        intent.putExtra("key", Integer.toString(position));
         startActivity(intent);
         Toast.makeText(getActivity(), "mg" + position, Toast.LENGTH_SHORT).show();
 
