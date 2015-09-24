@@ -4,6 +4,7 @@ package com.example.agata.loginapp;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,6 +74,8 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.recyclerview_layout, container, false);
 
 
@@ -101,6 +104,8 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
                 result.add(ci);
 
+
+
                 ca.notifyDataSetChanged();
                 ca.getItemCount();
                 swipeRefreshLayout.setRefreshing(false);
@@ -117,6 +122,7 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
 
         });
+
 
 
         return view;
@@ -142,6 +148,8 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
 
         for (int i=1; i <= size; i++) {
+            Intent in = new Intent(getActivity(), CardActivity.class);
+
             ContactInfo ci = new ContactInfo();
             ci.name = ContactInfo.NAME_PREFIX + i;
             ci.surname = ContactInfo.SURNAME_PREFIX + i;
@@ -149,6 +157,10 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
             result.add(ci);
 
+            in.putExtra("name", ContactInfo.NAME_PREFIX + i);
+         /*   String test = result.toString();
+            Toast.makeText(getActivity(),"test!!!"+test, Toast.LENGTH_SHORT).show();
+*/
         }
 
         return result;

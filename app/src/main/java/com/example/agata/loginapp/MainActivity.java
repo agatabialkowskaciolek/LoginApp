@@ -77,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
                         fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
                         break;
 
-                 /*   case 3:
+                  case 3:
                         fragment = new ThreeFragment();
                         fragmentManager = getFragmentManager();
                         fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
-                        break;*/
+                        break;
 
 
                         //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();

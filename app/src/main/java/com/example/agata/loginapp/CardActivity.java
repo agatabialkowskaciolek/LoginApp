@@ -37,22 +37,29 @@ public class CardActivity extends AppCompatActivity {
 
 
         String toastInfo= getIntent().getStringExtra("key");
-
-        Toast.makeText(this,toastInfo,Toast.LENGTH_SHORT).show();
-
+        String name=getIntent().getStringExtra("name");
+        Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
        textViewInCardActivity.setText(toastInfo);
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+*/
+
+                FloatingActionButton myFab = (FloatingActionButton)  findViewById(R.id.fab);
+                myFab.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        Intent i = new Intent(CardActivity.this,LoginActivity.class);
+                        startActivity(i);
+                    }
+                });
             }
-        });
+   //     });
     }
 
 
-}
