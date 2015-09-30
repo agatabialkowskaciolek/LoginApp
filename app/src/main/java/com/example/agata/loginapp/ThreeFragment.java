@@ -1,10 +1,11 @@
 package com.example.agata.loginapp;
 
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,23 @@ public class ThreeFragment extends Fragment {
 
         TextView textView = new TextView(getActivity());
         textView.setText(R.string.hello_blank_fragment);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(
+                R.id.recycler_view);
+        recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setAdapter(new NumberedAdapter(30));
+
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return (3 - position % 3);
+            }
+        });
+        recyclerView.setLayoutManager(manager);
+
         return view;
     }
 
