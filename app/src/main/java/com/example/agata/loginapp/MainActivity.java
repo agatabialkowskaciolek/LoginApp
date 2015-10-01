@@ -84,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
 
+                    case 4:
+                        fragment = new FourFragment();
+                        fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        break;
+
+
                         //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 }
                 mDrawerList.setItemChecked(position, true);

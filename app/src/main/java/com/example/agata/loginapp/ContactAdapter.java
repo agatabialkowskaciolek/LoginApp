@@ -100,7 +100,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 public void onClick(View view) {
                     // view.getContext().startActivity(new Intent(view.getContext(), MainActivity.class));
                     int position = getAdapterPosition();
-                    onCardClick.onTap(position);
+                    onCardClick.onTap( position);
 
 
                 }
