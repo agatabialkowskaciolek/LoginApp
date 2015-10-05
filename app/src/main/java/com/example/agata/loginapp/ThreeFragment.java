@@ -42,14 +42,13 @@ public class ThreeFragment extends Fragment {
                 R.id.recycler_view);
         recyclerView.addItemDecoration(new MarginDecoration(getActivity()));
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(new NumberedAdapter(30));
 
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 3);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return (3 - position % 3);
+                return (4 - position % 4);
             }
         });
         recyclerView.setLayoutManager(manager);

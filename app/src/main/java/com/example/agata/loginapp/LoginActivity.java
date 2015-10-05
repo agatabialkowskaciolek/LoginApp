@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String PASSWORD = "PASSWORD";
     public String userLogin;
     public EditText loginEditText;
+    Button buttonLogin;
     private EditText passwordEditText;
 
     public static boolean isEmailValid(String email) {
@@ -54,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button buttonLogin = (Button) findViewById(R.id.loginButton);
+
         loginEditText = (EditText) findViewById(R.id.loginEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
@@ -66,6 +69,18 @@ public class LoginActivity extends AppCompatActivity {
             loginEditText.setText(userLogin);
             passwordEditText.setText(password);
         }
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    onSend();
+                }
+
+
+                return false;
+            }
+        });
 
     }
 
@@ -114,8 +129,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickButtonLogin(View view) {
+        onSend();
+    }
 
-
+    private void onSend() {
         String password;
         TextView incorrectLogin;
         TextView incorrectPassword;
@@ -145,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "login musi zawierac @", Toast.LENGTH_SHORT).show();
         } else {
 
+
             SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
 
             settings.edit()
@@ -153,15 +171,12 @@ public class LoginActivity extends AppCompatActivity {
                     .apply();
 
 
-            Intent mainAppIntent = new Intent(this, MainActivity.class);
+            Intent mainAppIntent = new Intent(LoginActivity.this, MainActivity.class);
             mainAppIntent.putExtra("username", userLogin);
             // intent.putExtra("username",edUsername.getText().toString());
             startActivity(mainAppIntent);
 
-
         }
-
-
     }
 
     @Override
