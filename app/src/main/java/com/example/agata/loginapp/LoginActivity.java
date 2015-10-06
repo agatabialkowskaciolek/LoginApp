@@ -11,10 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,24 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     Button buttonLogin;
     private EditText passwordEditText;
 
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
 
-        String expression = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                "\\@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+";
-
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(email);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
-    }
       /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -99,84 +78,35 @@ public class LoginActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean isLegalPassword(String pass) {
-        String str;
-
-        if (!pass.matches(".*[A-Z].*")) return false;
-
-        if (!pass.matches(".*[a-z].*")) return false;
-
-        if (!pass.matches(".*\\d.*")) return false;
-
-        // if (!pass.matches(".*[~!.......].*")) return false;
-
-        return true;
-    }
-
-    public boolean isValidEmailAddress(String email) {
-        String ePattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                "\\@" +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                "(" +
-                "\\." +
-                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                ")+";
 
 
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
-    }
 
     public void onClickButtonLogin(View view) {
         onSend();
     }
 
     private void onSend() {
-        String password;
-        TextView incorrectLogin;
-        TextView incorrectPassword;
 
-        userLogin = loginEditText.getText().toString();
-        password = passwordEditText.getText().toString();
-        incorrectLogin = (TextView) findViewById(R.id.missingAtLoginTextView);
-        incorrectPassword = (TextView) findViewById(R.id.incorrectPasswordTextView);
-        String incorrectPasswordString = incorrectPassword.getText().toString();
-
-
-        if (userLogin.equals("") || password.equals("")) {
-
-            Toast.makeText(this, "Pole login lub hasło jest puste", Toast.LENGTH_SHORT).show();
-                        /*  Intent mainAppIntent = new Intent(this,AppActivity.class);
-                startActivity(mainAppIntent);*/
-        }
-        /*else if (!userLogin.contains("@")){
-            Toast.makeText(this, "login musi zawierac @", Toast.LENGTH_SHORT).show();
-        }*/
-        else if (!isLegalPassword(password)) {
-            Toast.makeText(this, "hasło musi mieć!!", Toast.LENGTH_SHORT).show();
+        ValidationLoginClass v = new ValidationLoginClass(this, loginEditText, passwordEditText, new ValidationLoginClass.ValidatorListener() {
+            @Override
+            public void onSuccess() {
+                Intent mainAppIntent = new Intent(LoginActivity.this, MainActivity.class);
+                mainAppIntent.putExtra("username", userLogin);
+                // intent.putExtra("username",edUsername.getText().toString());
+                startActivity(mainAppIntent);
 
 
-        } else if (!isEmailValid(userLogin)) {
+                SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
 
-            Toast.makeText(this, "login musi zawierac @", Toast.LENGTH_SHORT).show();
-        } else {
+                settings.edit()
+                        .putString(NAME, loginEditText.getText().toString())
+                        .putString(PASSWORD, passwordEditText.getText().toString())
+                        .apply();
+            }
+        });
 
+        v.checkValidations();
 
-            SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
-
-            settings.edit()
-                    .putString(NAME, loginEditText.getText().toString())
-                    .putString(PASSWORD, passwordEditText.getText().toString())
-                    .apply();
-
-
-            Intent mainAppIntent = new Intent(LoginActivity.this, MainActivity.class);
-            mainAppIntent.putExtra("username", userLogin);
-            // intent.putExtra("username",edUsername.getText().toString());
-            startActivity(mainAppIntent);
-
-        }
     }
 
     @Override
@@ -184,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onStop();
 
     }
+
+
 }
 
 
