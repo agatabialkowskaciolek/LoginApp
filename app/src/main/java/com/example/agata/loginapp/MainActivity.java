@@ -59,40 +59,37 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (position) {
 
-                    case 0:
+          /*          case 0:
                         fragment = new MainFragment();
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
                         break;
 
                     case 1:
                         fragment = new OneFragment();
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        break;*/
+                    case 0:
+                    case 1:
+                        fragment = new OneFragment();
                         break;
-                    //Toast.makeText(MainActivity.this, "111111", Toast.LENGTH_SHORT).show();
+
                     case 2:
-                        fragment = new TwoFragment();
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        fragment = new RecyclerViewScrollListFragment();
                         break;
 
                   case 3:
                         fragment = new ThreeFragment();
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
                         break;
 
 
                     case 4:
-                        fragment = new FourFragment();
-                        fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
+                        fragment = new GridRecyclerViewFragment();
                         break;
 
 
                         //Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
                 }
+
+                fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.main, fragment).commit();
                 mDrawerList.setItemChecked(position, true);
                 mDrawerList.setSelection(position);
                 //getActionBar().setTitle(mNavigationDrawerItemTitles[position]);

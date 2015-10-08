@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onSend() {
 
-        ValidationLoginClass v = new ValidationLoginClass(this, loginEditText, passwordEditText, new ValidationLoginClass.ValidatorListener() {
+        ValidationLoginClass validationLoginClass = new ValidationLoginClass(this, loginEditText, passwordEditText, new ValidationLoginClass.ValidatorListener() {
             @Override
             public void onSuccess() {
                 Intent mainAppIntent = new Intent(LoginActivity.this, MainActivity.class);
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        v.checkValidations();
+        validationLoginClass.checkValidations();
 
     }
 

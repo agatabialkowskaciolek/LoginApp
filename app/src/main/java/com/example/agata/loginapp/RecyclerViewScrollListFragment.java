@@ -4,7 +4,6 @@ package com.example.agata.loginapp;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,32 +15,26 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TwoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick {
+public class RecyclerViewScrollListFragment extends Fragment implements ContactAdapter.OnCardClick {
 
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     protected String[] mDataset;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ContactAdapter ca;
+    private ContactAdapter contactAdapter;
     private List<ContactInfo> result = new ArrayList<ContactInfo>();
     private RecyclerView.LayoutManager mLayoutManager;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private LinearLayoutManager llm;
+    private LinearLayoutManager linearLayoutManager;
 
 
-    public TwoFragment() {
-        // Required empty public constructor
+    public RecyclerViewScrollListFragment() {
+
     }
 
     /**
@@ -53,8 +46,8 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
      * @return A new instance of fragment TwoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TwoFragment newInstance(String param1, String param2) {
-        TwoFragment fragment = new TwoFragment();
+    public static RecyclerViewScrollListFragment newInstance(String param1, String param2) {
+        RecyclerViewScrollListFragment fragment = new RecyclerViewScrollListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -79,17 +72,17 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
         View view = inflater.inflate(R.layout.recyclerview_layout, container, false);
 
 
-        final RecyclerView recList = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        recList.setHasFixedSize(true);
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
 
 
-        llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         createList(6);
-        ca = new ContactAdapter(result, R.layout.card_layout, getActivity(), this);
-        recList.setAdapter(ca);
+        contactAdapter = new ContactAdapter(result, R.layout.card_layout, getActivity(), this);
+        recyclerView.setAdapter(contactAdapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.activity_main_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -103,41 +96,20 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
                 ci.email = ContactInfo.EMAIL_PREFIX + "@test.com";
 
                 result.add(ci);
-
-
-
-                ca.notifyDataSetChanged();
-                ca.getItemCount();
+                contactAdapter.notifyDataSetChanged();
+                contactAdapter.getItemCount();
                 swipeRefreshLayout.setRefreshing(false);
-
-
-                // ca2.onBindViewHolder();
-
                 Toast.makeText(getActivity(), "rrrrrrrrrrrrr", Toast.LENGTH_SHORT).show();
-
-                llm.setReverseLayout(true);
-                llm.scrollToPositionWithOffset(0, 50);
+                linearLayoutManager.setReverseLayout(true);
+                linearLayoutManager.scrollToPositionWithOffset(0, 50);
 
             }
 
 
         });
 
-
-
         return view;
     }
-
-
-
-    /*private void updateList() {
-        ContactAdapter mAdapter = new ContactAdapter(createList(1), R.layout.card_layout, getActivity());
-        mRecyclerView.setAdapter(mAdapter);
-
-        if (swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(false);
-        }
-    }*/
 
     private void refreshContent() {
 
@@ -147,7 +119,7 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
     private List<ContactInfo> createList(int size) {
 
 
-        for (int i=1; i <= size; i++) {
+        for (int i = 1; i <= size; i++) {
             Intent in = new Intent(getActivity(), CardActivity.class);
 
             ContactInfo ci = new ContactInfo();
@@ -165,8 +137,6 @@ public class TwoFragment extends Fragment implements ContactAdapter.OnCardClick 
 
         return result;
     }
-    //bbbbb
-
 
     @Override
     public void onTap(int position) {

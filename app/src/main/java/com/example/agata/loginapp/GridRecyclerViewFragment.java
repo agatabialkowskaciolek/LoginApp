@@ -1,7 +1,7 @@
 package com.example.agata.loginapp;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -11,14 +11,14 @@ import android.view.ViewGroup;
 /**
  * Created by aciolekwaw on 2015-10-01.
  */
-public class FourFragment extends Fragment {
-
-    public FourFragment() {
-        // Required empty public constructor
-    }
-
+public class GridRecyclerViewFragment extends Fragment {
 
     RecyclerView mRecyclerView;
+
+
+    public GridRecyclerViewFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
